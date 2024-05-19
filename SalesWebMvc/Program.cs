@@ -1,9 +1,65 @@
+/*using Microsoft.EntityFrameworkCore;
+using SalesWebMvc.Data;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+// Configure the DbContext with MySQL
+var connectionString = builder.Configuration.GetConnectionString("SalesWebMvcContext");
+builder.Services.AddDbContext<SalesWebMvcContext>(options =>
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 21)))); // Adjust for your MySQL version
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SalesWebMvc.Data;
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<SalesWebMvcContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SalesWebMvcContext") ?? throw new InvalidOperationException("Connection string 'SalesWebMvcContext' not found.")));
+using System.Configuration;
+using Microsoft.Extensions.Hosting;
+
+var builder = WebApplication.CreateBuilder(args); 
+
+
+var connectionStringMysql = builder.Configuration.GetConnectionString("SalesWebMvcContext");
+builder.Services.AddDbContext<SalesWebMvcContext>(options => options.UseMySql(connectionStringMysql, ServerVersion.Parse("8.1.0-mysql")));
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Models;
+using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
 
 namespace SalesWebMvc.Controllers
@@ -7,10 +8,12 @@ namespace SalesWebMvc.Controllers
     public class SellerController : Controller
     {
         private readonly SellerService _sellerService;
+        private readonly DepartamentService _departamentService;
 
-        public SellerController(SellerService sellerService)
+        public SellerController(SellerService sellerService, DepartamentService departamentService)
         {
             _sellerService = sellerService;
+            _departamentService = departamentService;
         }
 
         public IActionResult Index()
@@ -21,7 +24,9 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var departaments = _departamentService.FindAll();
+            var viewModel = new SellerFormViewModel { Departaments = departaments };
+            return View(viewModel);
         }
 
         [HttpPost]

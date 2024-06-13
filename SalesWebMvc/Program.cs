@@ -9,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 var connectionStringMysql = builder.Configuration.GetConnectionString("SalesWebMvcContext");
-builder.Services.AddDbContext<SalesWebMvcContext>(options => options.UseMySql(connectionStringMysql, ServerVersion.Parse("8.1.0-mysql")));
+builder.Services.AddDbContext<SalesWebMvcContext>(options =>
+options.UseMySql(connectionStringMysql, ServerVersion.Parse("8.1.0-mysql"),
+ mySqlOptions => mySqlOptions.EnableRetryOnFailure()
+));
 
 
 // Add services to the container.
@@ -36,6 +39,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    app.UseDeveloperExceptionPage();
 
 
 }

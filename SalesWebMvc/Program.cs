@@ -1,9 +1,16 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using SalesWebMvc.Services;
 using SalesWebMvc.Data;
+using System.Globalization;
 using System.Configuration;
 using Microsoft.Extensions.Hosting;
-using SalesWebMvc.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Localization;
+using Humanizer.Configuration;
+using System;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args); 
 
@@ -23,6 +30,17 @@ builder.Services.AddScoped<SellerService>();
 builder.Services.AddScoped<DepartamentService>();
 
 var app = builder.Build();
+
+// Configurar localização
+var enUS = new CultureInfo("en-US");
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(enUS),
+    SupportedCultures = new List<CultureInfo> { enUS },
+    SupportedUICultures = new List<CultureInfo> { enUS }
+};
+
+app.UseRequestLocalization(localizationOptions);
 
 
 // Inicializa o banco de dados com dados de seed

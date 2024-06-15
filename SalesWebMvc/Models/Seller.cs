@@ -7,9 +7,8 @@ namespace SalesWebMvc.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "{0} required")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
         public string Name { get; set; }
-
 
         [Required(ErrorMessage = "{0} required")]
         [EmailAddress(ErrorMessage = "Enter a valid email")]
@@ -29,6 +28,7 @@ namespace SalesWebMvc.Models
         public double BaseSalary { get; set; }
 
 
+        
         public Departament Departament { get; set; }
         public int DepartamentId {  get; set; } 
 
